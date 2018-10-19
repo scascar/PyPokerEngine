@@ -75,7 +75,6 @@ class Table:
         assert(len(search_targets) == len(players))
         match_player = next(
             (player for player in search_targets if check_method(player)), -1)
-
         return self._player_not_found if match_player == -1 else players.index(match_player)
 
     _player_not_found = "not_found"
