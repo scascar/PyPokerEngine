@@ -70,10 +70,19 @@ class RoundManager:
 
   @classmethod
   def __start_street(self, state):
-    next_player_pos = state["table"].next_ask_waiting_player_pos(state["table"].sb_pos()-1)
+    
+    if len(state["table"].seats.players) == 2:
+      next_player_pos = (state["table"].next_ask_waiting_player_pos(state["table"].sb_pos()-1)+1)%2
+    else:
+      next_player_pos = (state["table"].next_ask_waiting_player_pos(state["table"].sb_pos()-1)+1)%2
+
     state["next_player"] = next_player_pos
+
     street = state["street"]
     if street == Const.Street.PREFLOP:
+
+      if len(state["table"].seats.players) == 2:
+        state["next_player"] = (next_player_pos+1)%2
       return self.__preflop(state)
     elif street == Const.Street.FLOP:
       return self.__flop(state)
